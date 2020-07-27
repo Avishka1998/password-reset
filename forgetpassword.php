@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'mailSend.php';
     if(isset($_POST['submit'])){
         $email=$_POST['email'];
         $query="SELECT * FROM user WHERE email='$email'";
@@ -12,7 +13,10 @@ include 'config.php';
 
             $insertQuery="INSERT INTO password_reset (id,email,token) VALUES ('$userId','$userEmail','$token')";
             $insertResult=mysqli_query($connection,$insertQuery); 
-            echo 'Check your emails to get the password reset link';
+            $subject='Password reset';
+            $to=$userEmail;
+            $content="Refer this link to reset your password <br>http://localhost/password%20reset/passwordrest.php?$token";
+            SendEmail::sendMail($to,$subject,$content);
         }
             
         else
