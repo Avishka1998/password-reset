@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-include 'mailSend.php';
+include 'mailsend.php';
     if(isset($_POST['submit'])){
         $email=$_POST['email'];
         $query="SELECT * FROM user WHERE email='$email'";
