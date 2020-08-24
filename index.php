@@ -1,23 +1,22 @@
 <?php
-include 'config.php';
-    if(isset($_POST['submit'])){
+    require 'config.php';
+    $alert='';
+    if(isset($_POST['login'])){
         $email=$_POST['email'];
-        var_dump($email);
         $password=$_POST['password'];
-
-        $query="SELECT email,password FROM user WHERE email='$email'";
+        $query="SELECT * FROM user WHERE email='$email'";
         $result=mysqli_query($connection,$query);
         if(mysqli_num_rows($result)>0){
-            $resultArray=mysqli_fetch_assoc($result);
-            $passwordHash=$resultArray['password'];
-            if(password_verify($password,$passwordHash)){
-                echo 'welcome user';
+            $result_array=mysqli_fetch_assoc($result);
+            $hashmatch=password_verify($password,$result_array['password']);
+            if($hashmatch){
+                $alert="<p class='match'>User matched!</p>";
             }
             else
-                echo 'wrong password';
+                $alert="<p class='error'>Password is incorrect!</p>";
         }
         else
-            echo 'wrong username';
+            $alert="<p class='error'>User not found!</p>";
     }
 ?>
 <!DOCTYPE html>
@@ -25,14 +24,25 @@ include 'config.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post">
-        <input type="email" name="email" placeholder="enter your email">
-        <input type="password" name="password" placeholder="enter the password">
-        <input type="submit" name="submit" valuer="submit">
-    </form>
-    <a href="forgetpassword.php">forget password?</a>
+    <div class="formarea">
+        <h1>Welcome</h1>
+        <?php echo $alert;?>
+        <form method="POST">
+            <p>
+                <label for="email">Email</label>
+                <input type="email" name="email" placeholder="Enter the email" required>
+            </p>
+            <p>
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Enter the password" required>
+            </p>
+            <input type="submit" name="login" value="login">
+        </form> 
+        <a href="password_reset.php">Forgot password?</a>
+    </div>  
 </body>
 </html>
