@@ -42,7 +42,7 @@
             </p>
             <input type="submit" name="login" value="login">
         </form> 
-        <a href="password_reset.php">Forgot password?</a>
+        <a href="email_verify.php">Forgot password?</a>
     </div>  
 </body>
 </html>
