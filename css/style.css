@@ -59,7 +59,7 @@ input[type=submit]{
     background:red;
 }
 .message{
-    background:cyan;
+    background:grey;
     color:white;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;

@@ -16,7 +16,7 @@
                 $alert="<p class='error'>Password is incorrect!</p>";
         }
         else
-            $alert="<p class='error'>User not found!</p>";
+            $alert="<p class='error'>User not found!Please enter a registerd email address.</p>";
     }
 ?>
 <!DOCTYPE html>

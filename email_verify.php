@@ -26,7 +26,7 @@
                 $alert="<div class='failed'>Failed to send the mail!</div>";
         }
         else 
-        $alert="<p class='error'>The entered email is not a registerd email address!</p>";
+        $alert="<p class='error'>The entered email is not a registerd email address!Please try with a valid email address.</p>";
     }
 
 ?>

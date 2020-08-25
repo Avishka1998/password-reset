@@ -24,7 +24,7 @@
 
             }
             else{
-                $alert="<div class='error'>Access Denided!Token not found.</div>";
+                $alert="<div class='error'>Access Denided!Token has used before.</div>";
             }
         }
         else{
