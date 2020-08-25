@@ -21,7 +21,7 @@
 
             $send_result=mail($to,$subject,$message,$header);
             if($send_result)
-                $alert="<div class='sent'>Password request link sent to your email<br>Please follow the link.</div>";
+                $alert="<div class='sent'>Password request link sent to your email.<br>Please follow the link.</div>";
             else
                 $alert="<div class='failed'>Failed to send the mail!</div>";
         }
@@ -35,16 +35,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>Document</title>
 </head>
 <body>
-    <p class="message">Enter your email address so that we will send you an email to reset your password.</p>
-    <form action="" method="POST">
-        <p>
-            <label for="email">Email</label>
-            <input type="email" name="email" placeholder="Enter the email" required>
-        </p>
-        <input type="submit" name="send" value="send">
-    </form>
+    <div class="formarea">
+    <p class="message">Enter your registered email address so that we will send you an email to reset your password.</p>
+    <?php echo $alert;?>
+        <form action="" method="POST">
+            <p>
+                <label for="email">Email</label>
+                <input type="email" name="email" placeholder="Enter the email" required>
+            </p>
+            <input type="submit" name="send" value="send">
+        </form>
+    </div>
 </body>
 </html>

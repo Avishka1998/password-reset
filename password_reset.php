@@ -1,23 +1,36 @@
 <?php
+    $alert='';
     require 'config.php';
     $token=$_GET['token'];
-    $alert='';
-    if(isset($token)){
-        $query="SELECT email FROM tokens WHERE token='$token'";
-        $result=mysqli_query($connection,$query);
-        if(mysqli_num_rows($result)>0){
-            $result_array=mysqli_fetch_assoc($result);
-            $email=$result_array['email'];
+    if(isset($_POST['reset'])){
+        $password=mysqli_real_escape_string($connection,$_POST['password']);
+        $re_password=mysqli_real_escape_string($connection,$_POST['re_password']);
+        if($password===$re_password){
+            $ret_query="SELECT email FROM tokens WHERE token='$token'";
+            $ret_result=mysqli_query($connection,$ret_query);
+            if(mysqli_num_rows($ret_result)>0){
+                $ret_array=mysqli_fetch_assoc($ret_result);
+                $email=$ret_array['email'];
+                $hash=password_hash($password,PASSWORD_DEFAULT);
+                $update_query="UPDATE user SET password='$hash' WHERE email='$email' ";
+                $update_result=mysqli_query($connection,$update_query);
+                if(mysqli_affected_rows($connection)>0){
+                    $alert="<div class='sent'>Password Reseted sucessfully.</div>";
+                    $delete_query="DELETE FROM tokens WHERE token='$token'";
+                    $delete_result=mysqli_query($connection,$delete_query);
+                }
+                else
+                    $alert="<div class='error'>Failed to reset the password.Please try again.</div>";
+
+            }
+            else{
+                $alert="<div class='error'>Access Denided!Token not found.</div>";
+            }
         }
         else{
-            $alert='';
+            $alert="<div class='error'>Passwords do not match!</div>";
         }
-
-        // if(isset($_POST['reset'])){}
     }
-    else
-        header('Location:index.php');
-    $alert='';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +50,7 @@
             </p>
             <p>
                 <label for="re-password">Re-Password</label>
-                <input type="password" name="re-password" placeholder="Re-enter the password" required>
+                <input type="password" name="re_password" placeholder="Re-enter the password" required>
             </p>
             <input type="submit" name="reset" value="Reset">
         </form> 
